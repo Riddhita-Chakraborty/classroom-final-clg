@@ -1,0 +1,1737 @@
+<html lang="en" data-bs-theme="light" data-bs-navigation-position="sidenav">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
+
+    <!-- Settings -->
+    <!-- popup button css -->
+    <!-- CSS -->
+    <style>
+
+        /* Hide popup initially */
+        .pop-up {
+            display: none;
+            opacity: 0;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgb(65, 65, 65);
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            transition: opacity 0.3s ease-in-out;
+            z-index: 1001;
+            height: 50vh;
+            border-radius: 20px;
+        }
+
+        /* Background overlay */
+        .cover {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .blur-in {
+            display: block;
+        }
+
+        /* Close button styling */
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 20px;
+            text-decoration: none;
+            color: black;
+            cursor: pointer;
+        }
+
+    </style>
+    <!-- 1st chart -->
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+        @keyframes bake-pie {
+            from {
+                transform: rotate(0deg) translate3d(0, 0, 0);
+            }
+        }
+
+        section {
+            display: flex;
+            /* Use flexbox for centering */
+            flex-direction: column;
+            /* Stack items vertically */
+            align-items: center;
+            /* Center items horizontally */
+            text-align: center;
+            /* Center text */
+            padding: 10px;
+            /* Add some spacing */
+        }
+
+        .pieID {
+            display: inline-block;
+            vertical-align: top;
+            width: auto;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pie {
+            height: 200px;
+            width: 200px;
+            position: relative;
+            margin: 0 30px 30px 0;
+
+        }
+
+        .pie::before {
+            content: "";
+            display: block;
+            position: absolute;
+            z-index: 1;
+            width: 100px;
+            height: 100px;
+            background: #17191c;
+            border-radius: 50%;
+            top: 50px;
+            left: 50px;
+        }
+
+        /* .pie::after {
+            content: "";
+            display: block;
+            width: 120px;
+            height: 2px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            box-shadow: 0 0 3px 4px rgba(0, 0, 0, 0.1);
+            margin: 220px auto;
+
+        } */
+
+        .slice {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            clip: rect(0px, 200px, 200px, 100px);
+            animation: bake-pie 2.5s;
+        }
+
+        .slice span {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: #17191c;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            clip: rect(0px, 200px, 200px, 100px);
+        }
+
+        .legend {
+            list-style-type: none;
+            /* Remove default bullet points */
+            padding: 15px;
+            width: auto;
+            text-align: left;
+            /* Align text to the left */
+        }
+
+        .legend li {
+            display: flex;
+            /* Use flexbox for better layout */
+            justify-content: space-between;
+            /* Space text and number apart */
+            align-items: center;
+            /* Align text and number vertically */
+            width: 200px;
+            /* Set a fixed width for consistency */
+            height: 1.5em;
+            /* Adjust height to prevent overlap */
+            margin-bottom: 0.7em;
+            /* Add space between items */
+            padding-left: 0.5em;
+            /* Indent text */
+            border-left: 1.25em solid black;
+            /* Keep colored borders */
+            font-size: 16px;
+            /* Increase font size for readability */
+        }
+
+        .legend em {
+            font-style: normal;
+            /* Remove italics */
+            flex-grow: 1;
+            /* Allow labels to take up available space */
+        }
+
+        .legend span {
+            font-weight: bold;
+            /* Make numbers stand out */
+            margin-left: 10px;
+            /* Add spacing between label and number */
+        }
+    </style>
+    <!-- second chart -->
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+        @keyframes bake-pie {
+            from {
+                transform: rotate(0deg) translate3d(0, 0, 0);
+            }
+        }
+
+        section {
+            text-align: center;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+        }
+
+        .customPie {
+            height: 200px;
+            width: 200px;
+            position: relative;
+            margin: 0 30px 30px 0;
+        }
+
+        .customPie::before {
+            content: "";
+            display: block;
+            position: absolute;
+            z-index: 1;
+            width: 100px;
+            height: 100px;
+            background: #17191c;
+            border-radius: 50%;
+            top: 50px;
+            left: 50px;
+        }
+
+        .slice {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            clip: rect(0px, 200px, 200px, 100px);
+            animation: bake-pie 2.5s;
+        }
+
+        .slice span {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            clip: rect(0px, 200px, 200px, 100px);
+        }
+
+        .customLegend {
+            list-style-type: none;
+            padding: 15px;
+            width: auto;
+            text-align: left;
+        }
+
+        .customLegend li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 250px;
+            height: 1.5em;
+            margin-bottom: 0.7em;
+            padding-left: 0.5em;
+            border-left: 1.25em solid black;
+            font-size: 16px;
+        }
+
+        .customLegend em {
+            font-style: normal;
+            flex-grow: 1;
+        }
+
+        .customLegend span {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+    </style>
+    <!-- for the week bar -->
+    <style>
+        /* General Page Styling */
+        body {
+            background-color: #121212f3;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            width: 80%;
+            max-width: 700px;
+            height: 350px;
+            margin: 1px auto;
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        /* Animated Axes */
+        .chart-container::before,
+        .chart-container::after {
+            content: "";
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0);
+            transition: width 1s ease-in-out, height 1s ease-in-out;
+
+        }
+
+        /* Left Axis (Y-Axis) */
+        .chart-container::before {
+            width: 2px;
+            height: 0%;
+            left: 0;
+            bottom: 0;
+            animation: drawY 2s ease-in-out forwards;
+
+        }
+
+        /* Bottom Axis (X-Axis) */
+        .chart-container::after {
+            width: 0%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            animation: drawX 2.5s ease-in-out forwards;
+        }
+
+        /* Bars */
+        .chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 100%;
+            position: relative;
+        }
+
+        /* Individual Bar Containers */
+        .bar-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90px;
+            position: relative;
+        }
+
+        /* Bars Group */
+        .bar-group {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        /* Bars */
+        .bar {
+            width: 30px;
+            border-radius: 5px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-in forwards;
+        }
+
+        /* Labels */
+        .label {
+            margin-top: 10px;
+            font-size: 14px;
+            opacity: 0;
+            animation: fadeIn 1s ease-in forwards;
+        }
+
+        /* Value Labels */
+        .value-label {
+            margin-bottom: 27px;
+            margin-left: 2px;
+            position: absolute;
+            font-size: 14px;
+            font-weight: bold;
+            opacity: 0;
+            animation: fadeIn 1s ease-in forwards;
+            white-space: nowrap;
+        }
+
+        .current-value {
+            transform: translateX(-50%);
+        }
+
+        .previous-value {
+            transform: translateX(-50%);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Line Draw Animations */
+        @keyframes drawY {
+            from {
+                height: 0%;
+            }
+
+            to {
+                height: 100%;
+            }
+        }
+
+        @keyframes drawX {
+            from {
+                width: 0%;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+    </style>
+    <!-- for logo animation -->
+
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        #ani {
+            opacity: 0;
+            /* Initially hidden */
+            animation: fadeIn 3s ease-out forwards;
+        }
+
+        #location,
+        #datetime,
+        #world {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 2s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    <style>
+        #lang-logo {
+            color: #007bff;
+            height: 120%;
+            width: 120%;
+
+        }
+    </style>
+</head>
+<script>
+    /*!
+     * Color mode toggler for Bootstrap's docs (https://getbootstrap.com/)
+     * Copyright 2011-2024 The Bootstrap Authors
+     * Licensed under the Creative Commons Attribution 3.0 Unported License.
+     * Modified by Simpleqode
+     */
+
+    (() => {
+        'use strict';
+
+        const getStoredTheme = () => localStorage.getItem('theme');
+        const setStoredTheme = (theme) => localStorage.setItem('theme', theme);
+
+        const getStoredNavigationPosition = () => localStorage.getItem('navigationPosition');
+        const setStoredNavigationPosition = (navigationPosition) => localStorage.setItem('navigationPosition',
+            navigationPosition);
+
+        const getPreferredTheme = () => {
+            const storedTheme = getStoredTheme();
+            if (storedTheme) {
+                return storedTheme;
+            }
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        };
+
+        const getPreferredNavigationPosition = () => {
+            const storedNavigationPosition = getStoredNavigationPosition();
+            if (storedNavigationPosition) {
+                return storedNavigationPosition;
+            }
+            return 'sidenav';
+        };
+
+        const setTheme = (theme) => {
+            if (theme === 'auto') {
+                document.documentElement.setAttribute('data-bs-theme', window.matchMedia(
+                    '(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            } else {
+                document.documentElement.setAttribute('data-bs-theme', theme);
+            }
+        };
+
+        const setNavigationPosition = (navigationPosition) => {
+            document.documentElement.setAttribute('data-bs-navigation-position', navigationPosition);
+        };
+
+        setTheme(getPreferredTheme());
+        setNavigationPosition(getPreferredNavigationPosition());
+
+        const showActiveTheme = (theme, settingsSwitcher) => {
+            document.querySelectorAll('[data-bs-theme-value]').forEach((element) => {
+                element.classList.remove('active');
+                element.setAttribute('aria-pressed', 'false');
+
+                if (element.getAttribute('data-bs-theme-value') === theme) {
+                    element.classList.add('active');
+                    element.setAttribute('aria-pressed', 'true');
+                }
+            });
+            if (settingsSwitcher) {
+                settingsSwitcher.focus();
+            }
+        };
+
+        const showActiveNavigationPosition = (navigationPosition, settingsSwitcher) => {
+            document.querySelectorAll('[data-bs-navigation-position-value]').forEach((element) => {
+                element.classList.remove('active');
+                element.setAttribute('aria-pressed', 'false');
+
+                if (element.getAttribute('data-bs-navigation-position-value') ===
+                    navigationPosition) {
+                    element.classList.add('active');
+                    element.setAttribute('aria-pressed', 'true');
+                }
+            });
+
+            if (settingsSwitcher) {
+                settingsSwitcher.focus();
+            }
+        };
+
+        const refreshCharts = () => {
+            const charts = document.querySelectorAll('.chart-canvas');
+
+            charts.forEach((chart) => {
+                const chartId = chart.getAttribute('id');
+                const instance = Chart.getChart(chartId);
+
+                if (!instance) {
+                    return;
+                }
+
+                if (instance.options.scales.y) {
+                    instance.options.scales.y.grid.color = getComputedStyle(document
+                        .documentElement).getPropertyValue('--bs-border-color');
+                    instance.options.scales.y.ticks.color = getComputedStyle(document
+                        .documentElement).getPropertyValue('--bs-secondary-color');
+                }
+
+                if (instance.options.scales.x) {
+                    instance.options.scales.x.ticks.color = getComputedStyle(document
+                        .documentElement).getPropertyValue('--bs-secondary-color');
+                }
+
+                if (instance.options.elements.arc) {
+                    instance.options.elements.arc.borderColor = getComputedStyle(document
+                        .documentElement).getPropertyValue('--bs-body-bg');
+                    instance.options.elements.arc.hoverBorderColor = getComputedStyle(document
+                        .documentElement).getPropertyValue('--bs-body-bg');
+                }
+
+                instance.update();
+            });
+        };
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+            const storedTheme = getStoredTheme();
+            if (storedTheme !== 'light' && storedTheme !== 'dark') {
+                setTheme(getPreferredTheme());
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            showActiveTheme(getPreferredTheme());
+            showActiveNavigationPosition(getPreferredNavigationPosition());
+
+            document.querySelectorAll('[data-bs-theme-value]').forEach((toggle) => {
+                toggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const theme = toggle.getAttribute('data-bs-theme-value');
+                    const settingsSwitcher = toggle.closest('.nav-item').querySelector(
+                        '[data-bs-settings-switcher]');
+                    console.log(settingsSwitcher);
+                    setStoredTheme(theme);
+                    setTheme(theme);
+                    showActiveTheme(theme, settingsSwitcher);
+                    refreshCharts();
+                });
+            });
+
+            document.querySelectorAll('[data-bs-navigation-position-value]').forEach((toggle) => {
+                toggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const navigationPosition = toggle.getAttribute(
+                        'data-bs-navigation-position-value');
+                    const settingsSwitcher = toggle.closest('.nav-item').querySelector(
+                        '[data-bs-settings-switcher]');
+                    setStoredNavigationPosition(navigationPosition);
+                    setNavigationPosition(navigationPosition);
+                    showActiveNavigationPosition(navigationPosition, settingsSwitcher);
+                });
+            });
+        });
+    })();
+
+    // my addition for live date and time
+
+    // Function to update date and time
+    // Function to update date and time without seconds
+    function updateDateTime() {
+        let now = new Date();
+        let options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+        let dateTimeString = now.toLocaleString(undefined, options);
+        document.getElementById("datetime").innerHTML = dateTimeString;
+    }
+
+    setInterval(updateDateTime, 100); // Update every minute
+    updateDateTime(); // Initial call
+
+
+
+    // here i am gonna write the code for charts
+</script>
+<!-- this the the chart for solution by problem type -->
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="./assets/favicon/favicon.ico" type="image/x-icon">
+
+<!-- Fonts and icons -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&amp;display=swap"
+    rel="stylesheet">
+<link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0">
+
+
+<!-- Theme CSS -->
+<link rel="stylesheet" href="dashboard.css">
+
+<!-- Title -->
+
+</head>
+
+<body data-new-gr-c-s-check-loaded="14.1217.0" data-gr-ext-installed="">
+    <!-- Sidenav -->
+    <!-- Sidenav (sm) -->
+    <aside class="aside aside-sm d-none d-xl-flex" id="sidenav-sm" style="z-index: 1">
+        <nav class="navbar navbar-expand-xl navbar-vertical overflow-visible">
+            <div class="container-fluid">
+                <!-- Nav -->
+                <nav class="navbar-nav nav-pills h-100">
+                    <div class="nav-item dropend">
+                        <a href="#" role="button" data-bs-toggle="dropdown" data-bs-settings-switcher=""
+                            aria-expanded="false">
+                            <div class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right"
+                                data-bs-trigger="hover" data-bs-title="Settings">
+                                <span class="material-symbols-outlined"> settings </span>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu">
+                            <!-- Color mode -->
+                            <h6 class="dropdown-header">Color mode</h6>
+                            <a class="dropdown-item d-flex active" data-bs-theme-value="light" href="#" role="button"
+                                aria-pressed="true">
+                                <span class="material-symbols-outlined me-2"> light_mode </span> Light
+                            </a>
+                            <a class="dropdown-item d-flex" data-bs-theme-value="dark" href="#" role="button"
+                                aria-pressed="false"> <span class="material-symbols-outlined me-2"> dark_mode </span>
+                                Dark </a>
+                            <a class="dropdown-item d-flex" data-bs-theme-value="auto" href="#" role="button"
+                                aria-pressed="false"> <span class="material-symbols-outlined me-2"> contrast </span>
+                                Auto </a>
+
+                            <!-- Divider -->
+                            <hr class="dropdown-divider">
+
+                            <!-- Navigation position -->
+                            <h6 class="dropdown-header">Navigation position</h6>
+                            <a class="dropdown-item d-flex active" data-bs-navigation-position-value="sidenav" href="#"
+                                role="button" aria-pressed="true">
+                                <span class="material-symbols-outlined me-2"> thumbnail_bar </span> Sidenav
+                            </a>
+                            <a class="dropdown-item d-flex" data-bs-navigation-position-value="topnav" href="#"
+                                role="button" aria-pressed="false">
+                                <span class="material-symbols-outlined me-2"> toolbar </span> Topnav
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Contact Button -->
+                    <!--<div class="nav-item">
+                        <a class="nav-link" href="#" id="contactButton">
+                            <span class="material-symbols-outlined me-3">
+                                contact_support
+                            </span>
+                            <span class="d-xl-none ms-3">Contact us</span>
+                        </a>
+                    </div>-->
+                </nav>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Sidenav (lg) -->
+    <aside class="aside" id="sidenav-lg">
+        <nav class="navbar navbar-expand-xl navbar-vertical">
+            <div class="container-lg">
+                <!-- Brand -->
+                <a class="navbar-brand fs-5 fw-bold px-xl-3 mb-xl-4" href="./index.html">
+                    <span width="24" height="24" viewBox="0 0 24 24"
+                        class="fs-4 text-secondary me-1 duo-icon duo-icon-box-2">
+                        <img id="ani" class="avatar-img" src="darklogo.png" alt="..." >
+                        </svg>
+                </a>
+
+                <!-- User -->
+                <div class="ms-auto d-xl-none">
+                    <div class="dropdown my-n2">
+                        <a class="btn btn-link d-inline-flex align-items-center dropdown-toggle" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="avatar avatar-sm avatar-status avatar-status-success me-3">
+                                <img class="avatar-img" src="dp.jpg" alt="...">
+                            </span>
+                            Riddhita Chakraborty
+                        </a>
+                        
+                    </div>
+                </div>
+
+                <!-- Toggler -->
+                <button class="navbar-toggler ms-3" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#sidenavLargeCollapse" aria-controls="sidenavLargeCollapse" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Collapse -->
+                <div class="collapse navbar-collapse" id="sidenavLargeCollapse">
+                    <!-- Search -->
+                    <!--<div class="input-group d-xl-none my-4 my-xl-0">
+                        <input class="form-control" id="topnavSearchInputMobile" type="search" placeholder="Search"
+                            aria-label="Search" aria-describedby="navbarSearchMobile">
+                        <span class="input-group-text" id="navbarSearchMobile">
+                            <span class="material-symbols-outlined"> search </span>
+                        </span>
+                    </div>
+
+                    <!-- Nav -->
+                    <nav class="navbar-nav nav-pills mb-7">
+                        <div class="nav-item">
+                            <a class="nav-link active" href="#" data-bs-toggle="collapse" data-bs-target="#dashboards"
+                                role="button" aria-expanded="false" aria-controls="dashboards">
+                                <span class="material-symbols-outlined me-3">space_dashboard</span> Dashboards
+                            </a>
+                            <div class="collapse show" id="dashboards">
+                                <nav class="nav nav-pills">
+                                    <a class="nav-link active" href="./index.html">Default</a>
+                                    <a class="nav-link " href="./todo.html">To Do </a>
+                                    <!--<a class="nav-link " href="./dashboards/saas.html">Bookmarks</a>-->
+                                </nav>
+                            </div>
+                        </div>
+                        <h3 class="fs-base px-3 mb-4" style="margin-top: 16px;">Problems</h3>
+                        <div class="nav-item">
+                            <a class="nav-link " href="#" data-bs-toggle="collapse" data-bs-target="#customers"
+                                role="button" aria-expanded="false" aria-controls="customers">
+                                <span class="material-symbols-outlined me-3">data_array</span>
+                                Array
+                            </a>
+                            <div class="collapse " id="customers">
+                                <nav class="nav nav-pills">
+                                    <a class="nav-link " href="EasyArray.html">Easy</a>
+                                    <a class="nav-link " href="MediumArray.html">Medium</a>
+                                    <a class="nav-link " href="HardArray.html">Hard</a>
+                                    <!-- Have to change the links -->
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="nav-item">
+                            <a class="nav-link " href="#" data-bs-toggle="collapse" data-bs-target="#projects"
+                                role="button" aria-expanded="false" aria-controls="projects">
+                                <span class="material-symbols-outlined me-3">sort_by_alpha</span>
+                                Strings
+                            </a>
+                            <div class="collapse " id="projects">
+                                <nav class="nav nav-pills">
+                                    <a class="nav-link " href="EasyString.html">Easy</a>
+                                    <a class="nav-link " href="MediumString.html">Medium</a>
+                                    <a class="nav-link " href="HardString.html">Hard</a>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="nav-item">
+                            <a class="nav-link " href="#" data-bs-toggle="collapse" data-bs-target="#account"
+                                role="button" aria-expanded="false" aria-controls="account">
+                                <span class="material-symbols-outlined me-3">
+                                    graph_5
+                                </span>DSA
+                            </a>
+                            <div class="collapse " id="account">
+                                <nav class="nav nav-pills">
+                                    <a class="nav-link " href="EasyDSA.html">Easy</a>
+                                    <a class="nav-link " href="MediumDSA.html">Medium</a>
+                                    <a class="nav-link " href="HardDSA.html">Hard</a>
+                                </nav>
+                            </div>
+                        </div>
+                        
+                        <!--<div class="nav-item">
+                            <a class="nav-link " href="#" data-bs-toggle="collapse" data-bs-target="#posts"
+                                role="button" aria-expanded="false" aria-controls="posts">
+                                <span class="material-symbols-outlined me-3">
+                                    tenancy
+                                </span> Trees
+                            </a>
+                            <div class="collapse " id="posts">
+                                <nav class="nav nav-pills">
+                                    <a class="nav-link " href="./posts/categories.html">Easy</a>
+                                    <a class="nav-link " href="./posts/posts.html">Medium</a>
+                                    <a class="nav-link " href="./posts/post-new.html">Hard</a>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="nav-item">
+                            <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#authentication"
+                                role="button" aria-expanded="false" aria-controls="authentication">
+                                <span class="material-symbols-outlined me-3">
+                                    code
+                                </span>Languages
+                            </a>
+                            <div class="collapse" id="authentication">
+                                <nav class="nav nav-pills">
+                                    <a class="nav-link" href="./auth/sign-in.html">C</a>
+                                    <a class="nav-link" href="./auth/sign-up.html">C++</a>
+                                    <a class="nav-link" href="./auth/password-reset.html">Python</a>
+                                    <a class="nav-link" href="./auth/error.html">Java</a>
+                                    <a class="nav-link" href="./auth/error.html">JavaScirpt</a>
+                                </nav>
+                            </div>
+                        </div>-->
+                    </nav>
+
+                    <!-- Heading of others-->
+                    <h3 class="fs-base px-3 mb-4">Documentation</h3>
+
+                    <!-- Nav -->
+                    <nav class="navbar-nav nav-pills mb-xl-7">
+                        <div class="nav-item">
+                            <a class="nav-link " href="account.html">
+                                <span class="material-symbols-outlined me-3">sticky_note_2</span> Account Overview
+                            </a>
+                        </div>
+                        <div class="nav-item">
+                            <a class="nav-link " href="accset.html">
+                                <span class="material-symbols-outlined me-3">sticky_note_2</span> Account Settings
+                            </a>
+                        </div>
+                        
+                        <!--<div class="nav-item">
+                            <a class="nav-link " href="./docs/components.html">
+                                <span class="material-symbols-outlined me-3">
+                                    auto_stories
+                                </span> Blogs
+                            </a>
+                        </div>-->
+                       
+                    </nav>
+
+                    <!-- Divider -->
+                    <hr class="my-4 d-xl-none">
+
+                    <!-- Nav -->
+                    <nav class="navbar-nav nav-pills d-xl-none mb-7">
+                        <div class="nav-item dropdown">
+                            <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown"
+                                data-bs-settings-switcher="" aria-expanded="false">
+                                <span class="material-symbols-outlined"> settings </span> <span
+                                    class="d-xl-none ms-3">Settings</span>
+                            </a>
+                            <div class="dropdown-menu">
+                                <!-- Color mode -->
+                                <h6 class="dropdown-header">Color mode</h6>
+                                <a class="dropdown-item d-flex active" data-bs-theme-value="light" href="#"
+                                    role="button" aria-pressed="true">
+                                    <span class="material-symbols-outlined me-2"> light_mode </span> Light
+                                </a>
+                                <a class="dropdown-item d-flex" data-bs-theme-value="dark" href="#" role="button"
+                                    aria-pressed="false"> <span class="material-symbols-outlined me-2"> dark_mode
+                                    </span> Dark </a>
+                                <a class="dropdown-item d-flex" data-bs-theme-value="auto" href="#" role="button"
+                                    aria-pressed="false"> <span class="material-symbols-outlined me-2"> contrast </span>
+                                    Auto </a>
+
+                                <!-- Divider -->
+                                <hr class="dropdown-divider">
+
+                                <!-- Navigation position -->
+                                <h6 class="dropdown-header">Navigation position</h6>
+                                <a class="dropdown-item d-flex active" data-bs-navigation-position-value="sidenav"
+                                    href="#" role="button" aria-pressed="true">
+                                    <span class="material-symbols-outlined me-2"> thumbnail_bar </span> Sidenav
+                                </a>
+                                <a class="dropdown-item d-flex" data-bs-navigation-position-value="topnav" href="#"
+                                    role="button" aria-pressed="false">
+                                    <span class="material-symbols-outlined me-2"> toolbar </span> Topnav
+                                </a>
+                            </div>
+                        </div>
+                       <!-- <div class="nav-item">
+                            <a class="nav-link" href="https://themes.getbootstrap.com/product/dashbrd/" target="_blank">
+                                <span class="material-symbols-outlined me-3">local_mall</span> Go to product page
+                            </a>
+                        </div>
+                        <!-- <div class="nav-item">
+                            <a class="nav-link" href="mailto:yevgenysim+simpleqode@gmail.com">
+                                <span class="material-symbols-outlined me-3">alternate_email</span> Contact us
+                            </a>
+                        </div> -->
+                        <!-- Contact Button -->
+                        <!--<div class="nav-item">
+                            <a class="nav-link" href="#" id="contactButton">
+                                <span class="material-symbols-outlined">alternate_email</span>
+                                <span class="d-xl-none ms-3">Contact us</span>
+                            </a>
+                        </div>-->
+                    </nav>
+
+                    <!-- Card -->
+                    <div class="card mt-auto">
+                        <div class="card-body">
+                            <!-- Heading -->
+                            <h6>Need help?</h6>
+
+                            <!-- Text -->
+                            <p class="text-body-secondary mb-0">Feel free to reach out to us should you have any
+                                questions or suggestions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Topnav -->
+    <!-- Topnav (lg) -->
+    <nav class="navbar navbar-expand-xl" id="topnav-lg">
+        <div class="container-lg">
+            <!-- Brand -->
+            <a class="navbar-brand fs-5 fw-bold" href="./index.html"> <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                    height="24" viewBox="0 0 24 24" class="fs-4 text-secondary me-1 duo-icon duo-icon-box-2"
+                    data-duoicon="box-2">
+                    <path fill="currentColor"
+                        d="m20.765 7.982.022.19.007.194v7.268a2.5 2.5 0 0 1-1.099 2.07l-.15.095-6.295 3.634-.124.067-.126.06v-8.99l7.765-4.588Z"
+                        class="duoicon-secondary-layer" opacity=".3"></path>
+                    <path fill="currentColor"
+                        d="m13.25 2.567 6.294 3.634c.05.03.1.06.148.092L12 10.838 4.308 6.293a2.81 2.81 0 0 1 .148-.092l6.294-3.634a2.498 2.498 0 0 1 2.5 0Z"
+                        class="duoicon-primary-layer"></path>
+                    <path fill="currentColor"
+                        d="M3.235 7.982 11 12.571v8.988a2.339 2.339 0 0 1-.25-.126l-6.294-3.634a2.502 2.502 0 0 1-1.25-2.165V8.366c0-.13.01-.258.03-.384h-.001Z"
+                        class="duoicon-secondary-layer" opacity=".3"></path>
+                </svg> Dashbrd </a>
+
+            
+
+            <!-- Collapse -->
+            
+
+                <!-- Nav -->
+                <nav class="navbar-nav nav-pills mx-auto">
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Dashboards
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item active" href="./index.html">Default</a>
+                            <a class="dropdown-item " href="./todo.html">To Do</a>
+                            <!--<a class="dropdown-item " href="./dashboards/saas.html">SaaS</a>-->
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Array
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item " href="EasyArray.html">Easy</a>
+                            <a class="dropdown-item " href="MediumArray.html">Medium</a>
+                            <a class="dropdown-item " href="HardArray.html">Hard</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Strings
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item " href="EasyString.html">Easy</a>
+                            <a class="dropdown-item " href="MediumString.html">Medium</a>
+                            <a class="dropdown-item " href="HardString.html">Hard</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Account
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item " href="account.html">Account overview</a>
+                            <a class="dropdown-item " href="accset.html">Account settings</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            DSA
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item " href="EasyDSA.html">Easy</a>
+                            <a class="dropdown-item " href="MediumDSA.html">Medium</a>
+                            <a class="dropdown-item " href="HardDSA.html">Hard</a>
+                        </div>
+                    </div>
+                    <!--<div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Trees
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item " href="./posts/categories.html">Easy</a>
+                            <a class="dropdown-item " href="./posts/posts.html">Medium</a>
+                            <a class="dropdown-item " href="./posts/post-new.html">Hard</a>
+                        </div>
+                    </div>-->
+                    
+                    
+                </nav>
+
+                <!-- Divider -->
+                <hr class="my-4 d-xl-none">
+
+                <!-- Nav -->
+                <nav class="navbar-nav nav-pills">
+                    <div class="nav-item dropdown">
+                        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown"
+                            data-bs-settings-switcher="" aria-expanded="false">
+                            <span class="material-symbols-outlined"> settings </span> <span
+                                class="d-xl-none ms-3">Settings</span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <!-- Color mode -->
+                            <h6 class="dropdown-header">Color mode</h6>
+                            <a class="dropdown-item d-flex active" data-bs-theme-value="light" href="#" role="button"
+                                aria-pressed="true">
+                                <span class="material-symbols-outlined me-2"> light_mode </span> Light
+                            </a>
+                            <a class="dropdown-item d-flex" data-bs-theme-value="dark" href="#" role="button"
+                                aria-pressed="false"> <span class="material-symbols-outlined me-2"> dark_mode </span>
+                                Dark </a>
+                            <a class="dropdown-item d-flex" data-bs-theme-value="auto" href="#" role="button"
+                                aria-pressed="false"> <span class="material-symbols-outlined me-2"> contrast </span>
+                                Auto </a>
+
+                            <!-- Divider -->
+                            <hr class="dropdown-divider">
+
+                            <!-- Navigation position -->
+                            <h6 class="dropdown-header">Navigation position</h6>
+                            <a class="dropdown-item d-flex active" data-bs-navigation-position-value="sidenav" href="#"
+                                role="button" aria-pressed="true">
+                                <span class="material-symbols-outlined me-2"> thumbnail_bar </span> Sidenav
+                            </a>
+                            <a class="dropdown-item d-flex" data-bs-navigation-position-value="topnav" href="#"
+                                role="button" aria-pressed="false">
+                                <span class="material-symbols-outlined me-2"> toolbar </span> Topnav
+                            </a>
+                        </div>
+                    </div>
+                   <!-- <div class="nav-item">
+                        <a class="nav-link" href="https://themes.getbootstrap.com/product/dashbrd/" target="_blank">
+                            <span class="material-symbols-outlined">local_mall</span> <span class="d-xl-none ms-3">Go to
+                                product page</span>
+                        </a>
+                    </div>
+                    <!-- Contact Button -->
+                    <!--<div class="nav-item">
+                        <a class="nav-link" href="#" id="contactButton">
+                            <span class="material-symbols-outlined">alternate_email</span>
+                            <span class="d-xl-none ms-3">Contact us</span>
+                        </a>
+                    </div>-->
+                </nav>
+            </div>
+        </div>
+    </nav>
+
+   <!-- Topnav (sm) -->
+   <nav class="navbar d-none d-xl-flex px-xl-6" id="topnav-sm">
+    <div class="container flex-column align-items-stretch">
+        <div class="row">
+            <div class="col">
+                
+            </div>
+            <div class="col-auto">
+                <!-- User -->
+                <div class="dropdown my-n2">
+                    <a class="btn btn-link d-inline-flex align-items-center dropdown-toggle" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="avatar avatar-sm avatar-status avatar-status-success me-3">
+                            <img class="avatar-img" src="dp.jpg" alt="...">
+                        </span>
+                        Riddhita Chakraborty
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="account.html">Account</a></li>
+                        <!--<li><a class="dropdown-item" href="#">Change password</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Sign out</a></li>-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+
+    
+    <!-- Main -->
+    <!-- Main -->
+<!-- Main -->
+<main class="main px-lg-6">
+    <!-- Content -->
+    <div class="container-lg">
+        <!-- Page header -->
+        <div class="row align-items-center mb-7">
+            <div class="col-auto">
+                <!-- Page header content here -->
+            </div>
+        </div>
+
+        <!-- Page content -->
+        <div class="col-12 col-lg-9" data-bs-spy="scroll" data-bs-target="#accountNav" data-bs-smooth-scroll="true" tabindex="0">
+            <!-- General content here -->
+        </div>
+        <hr>
+
+        <!-- To-Do List Section -->
+        <div class="container-lg">
+            <div class="row">
+                <div class="col-12 col-lg-9">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">To-Do List</h5>
+                            <div class="filter-options mt-2">
+                                <button id="showAll" class="btn btn-sm btn-outline-secondary active">All</button>
+                                <button id="showActive" class="btn btn-sm btn-outline-secondary">Active</button>
+                                <button id="showCompleted" class="btn btn-sm btn-outline-secondary">Completed</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <!-- Form to Add Tasks -->
+                            <form id="todoForm" class="mb-4">
+                                <div class="input-group">
+                                    <input type="text" id="taskInput" class="form-control" placeholder="Add a new task" required>
+                                    <input type="date" id="taskDate" class="form-control" style="max-width: 150px;">
+                                    <button type="submit" class="btn btn-primary" id="todo" style="color:skyblue;">Add Task </button>
+                                </div>
+                            </form>
+
+                            <!-- Task List -->
+                            <ul id="taskList" class="list-group">
+                                <!-- Tasks will be dynamically added here -->
+                            </ul>
+                            
+                            <!-- Task counter -->
+                            <div class="task-counter mt-3">
+                                <span id="remainingCount">0</span> tasks remaining
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- CSS for To-Do List -->
+<style>
+    /* To-Do List Styling */
+    #taskList {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    #taskList li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        margin-bottom: 8px;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        transition: all 0.3s ease;
+    }
+
+    #taskList li.completed {
+        text-decoration: line-through;
+        opacity: 0.7;
+        background-color: #e9ecef;
+    }
+
+    #taskList li .task-content {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+    }
+
+    #taskList li .task-text {
+        margin-left: 10px;
+    }
+
+    #taskList li .task-date {
+        font-size: 0.8rem;
+        color: #6c757d;
+        margin-left: 15px;
+        font-style: italic;
+    }
+
+    #taskList li .task-actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    #taskList li .task-actions button {
+        border: none;
+        padding: 5px 10px;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        transition: all 0.2s;
+    }
+
+    #taskList li .edit-btn {
+        background-color: #ffc107;
+        color: #212529;
+    }
+
+    #taskList li .edit-btn:hover {
+        background-color: #e0a800;
+    }
+
+    #taskList li .delete-btn {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    #taskList li .delete-btn:hover {
+        background-color: #c82333;
+    }
+
+    #taskList li:hover {
+        background-color: #f1f1f1;
+        transform: translateY(-2px);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .task-counter {
+        font-size: 0.9rem;
+        color: #6c757d;
+        text-align: right;
+    }
+
+    .filter-options {
+        display: flex;
+        gap: 5px;
+    }
+
+    .filter-options .btn.active {
+        background-color: #e9546d;
+        color: white;
+        border-color: #e9546d;
+    }
+
+    .due-soon {
+        border-left: 4px solid #ffc107 !important;
+    }
+
+    .overdue {
+        border-left: 4px solid #dc3545 !important;
+    }
+</style>
+
+<!-- JavaScript for To-Do List Functionality -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const todoForm = document.getElementById("todoForm");
+        const taskInput = document.getElementById("taskInput");
+        const taskDate = document.getElementById("taskDate");
+        const taskList = document.getElementById("taskList");
+        const showAll = document.getElementById("showAll");
+        const showActive = document.getElementById("showActive");
+        const showCompleted = document.getElementById("showCompleted");
+        const remainingCount = document.getElementById("remainingCount");
+
+        // Set default date to today
+        const today = new Date().toISOString().split('T')[0];
+        taskDate.value = today;
+
+        // Load tasks from localStorage
+        function loadTasks() {
+            const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            tasks.forEach(task => {
+                addTaskToList(task.text, task.completed, task.date, task.id);
+            });
+            updateTaskCounter();
+        }
+
+        // Generate unique ID for tasks
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        }
+
+        // Add Task to the list
+        function addTaskToList(taskText, isCompleted = false, taskDate = today, taskId = generateId()) {
+            const li = document.createElement("li");
+            li.dataset.id = taskId;
+            li.classList.toggle("completed", isCompleted);
+            
+            // Check if task is overdue or due soon
+            if (taskDate) {
+                const dueDate = new Date(taskDate);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                const timeDiff = dueDate - today;
+                const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+                
+                if (daysDiff < 0) {
+                    li.classList.add("overdue");
+                } else if (daysDiff <= 3) {
+                    li.classList.add("due-soon");
+                }
+            }
+
+            li.innerHTML = `
+                <div class="task-content">
+                    <input type="checkbox" ${isCompleted ? 'checked' : ''}>
+                    <span class="task-text">${taskText}</span>
+                    ${taskDate ? `<span class="task-date">${formatDate(taskDate)}</span>` : ''}
+                </div>
+                <div class="task-actions">
+                    <button class="edit-btn">Edit</button>
+                    <button class="delete-btn">Delete</button>
+                </div>
+            `;
+
+            // Add task to the list
+            taskList.appendChild(li);
+
+            // Event listener for completing tasks
+            li.querySelector("input[type='checkbox']").addEventListener("change", function () {
+                li.classList.toggle("completed");
+                updateLocalStorage();
+                updateTaskCounter();
+            });
+
+            // Event listener for editing tasks
+            li.querySelector(".edit-btn").addEventListener("click", function () {
+                editTask(li, taskText, taskDate);
+            });
+
+            // Event listener for deleting tasks
+            li.querySelector(".delete-btn").addEventListener("click", function () {
+                if (confirm("Are you sure you want to delete this task?")) {
+                    taskList.removeChild(li);
+                    updateLocalStorage();
+                    updateTaskCounter();
+                }
+            });
+        }
+
+        // Format date for display
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+
+        // Edit task
+        function editTask(li, currentText, currentDate) {
+            const taskTextElement = li.querySelector(".task-text");
+            const taskDateElement = li.querySelector(".task-date");
+            
+            const originalText = currentText;
+            const originalDate = currentDate;
+            
+            // Create input field for text
+            const textInput = document.createElement("input");
+            textInput.type = "text";
+            textInput.value = currentText;
+            textInput.className = "form-control form-control-sm";
+            textInput.style.display = "inline-block";
+            textInput.style.width = "auto";
+            
+            // Create input field for date
+            const dateInput = document.createElement("input");
+            dateInput.type = "date";
+            dateInput.value = currentDate || today;
+            dateInput.className = "form-control form-control-sm";
+            dateInput.style.display = "inline-block";
+            dateInput.style.width = "auto";
+            dateInput.style.marginLeft = "10px";
+            
+            // Replace text with input fields
+            taskTextElement.replaceWith(textInput);
+            if (taskDateElement) {
+                taskDateElement.replaceWith(dateInput);
+            } else {
+                const dateContainer = document.createElement("span");
+                dateContainer.className = "task-date";
+                dateContainer.style.marginLeft = "10px";
+                dateContainer.appendChild(dateInput);
+                li.querySelector(".task-content").appendChild(dateContainer);
+            }
+            
+            // Focus on text input
+            textInput.focus();
+            
+            // Save changes when Enter is pressed or focus is lost
+            function saveChanges() {
+                const newText = textInput.value.trim();
+                const newDate = dateInput.value;
+                
+                if (newText) {
+                    taskTextElement.textContent = newText;
+                    textInput.replaceWith(taskTextElement);
+                    
+                    if (newDate) {
+                        const formattedDate = formatDate(newDate);
+                        if (taskDateElement) {
+                            taskDateElement.textContent = formattedDate;
+                            dateInput.replaceWith(taskDateElement);
+                        } else {
+                            const newDateElement = document.createElement("span");
+                            newDateElement.className = "task-date";
+                            newDateElement.textContent = formattedDate;
+                            dateInput.parentNode.replaceWith(newDateElement);
+                        }
+                        
+                        // Update due date styling
+                        li.classList.remove("overdue", "due-soon");
+                        const dueDate = new Date(newDate);
+                        const today = new Date();
+                        today.setHours(0, 0, 0, 0);
+                        
+                        const timeDiff = dueDate - today;
+                        const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+                        
+                        if (daysDiff < 0) {
+                            li.classList.add("overdue");
+                        } else if (daysDiff <= 3) {
+                            li.classList.add("due-soon");
+                        }
+                    } else {
+                        dateInput.parentNode.remove();
+                    }
+                    
+                    updateLocalStorage();
+                } else {
+                    // If text is empty, revert to original or delete
+                    if (originalText) {
+                        taskTextElement.textContent = originalText;
+                        textInput.replaceWith(taskTextElement);
+                        
+                        if (originalDate) {
+                            const formattedDate = formatDate(originalDate);
+                            if (taskDateElement) {
+                                taskDateElement.textContent = formattedDate;
+                                dateInput.replaceWith(taskDateElement);
+                            } else {
+                                const newDateElement = document.createElement("span");
+                                newDateElement.className = "task-date";
+                                newDateElement.textContent = formattedDate;
+                                dateInput.parentNode.replaceWith(newDateElement);
+                            }
+                        } else {
+                            dateInput.parentNode.remove();
+                        }
+                    } else {
+                        taskList.removeChild(li);
+                        updateLocalStorage();
+                        updateTaskCounter();
+                    }
+                }
+            }
+            
+            textInput.addEventListener("blur", saveChanges);
+            dateInput.addEventListener("blur", saveChanges);
+            
+            textInput.addEventListener("keyup", function(e) {
+                if (e.key === "Enter") {
+                    saveChanges();
+                }
+            });
+        }
+
+        // Save tasks to localStorage
+        function updateLocalStorage() {
+            const tasks = [];
+            const taskItems = taskList.querySelectorAll("li");
+            
+            taskItems.forEach(item => {
+                const dateElement = item.querySelector(".task-date");
+                tasks.push({
+                    id: item.dataset.id,
+                    text: item.querySelector(".task-text").textContent,
+                    completed: item.classList.contains("completed"),
+                    date: dateElement ? dateElement.textContent : null
+                });
+            });
+            
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+        }
+
+        // Update task counter
+        function updateTaskCounter() {
+            const remainingTasks = taskList.querySelectorAll("li:not(.completed)").length;
+            remainingCount.textContent = remainingTasks;
+        }
+
+        // Filter tasks
+        showAll.addEventListener("click", function() {
+            showAll.classList.add("active");
+            showActive.classList.remove("active");
+            showCompleted.classList.remove("active");
+            
+            taskList.querySelectorAll("li").forEach(li => {
+                li.style.display = "flex";
+            });
+        });
+
+        showActive.addEventListener("click", function() {
+            showAll.classList.remove("active");
+            showActive.classList.add("active");
+            showCompleted.classList.remove("active");
+            
+            taskList.querySelectorAll("li").forEach(li => {
+                li.style.display = li.classList.contains("completed") ? "none" : "flex";
+            });
+        });
+
+        showCompleted.addEventListener("click", function() {
+            showAll.classList.remove("active");
+            showActive.classList.remove("active");
+            showCompleted.classList.add("active");
+            
+            taskList.querySelectorAll("li").forEach(li => {
+                li.style.display = li.classList.contains("completed") ? "flex" : "none";
+            });
+        });
+
+        // Add Task on form submit
+        todoForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const taskText = taskInput.value.trim();
+            const taskDueDate = taskDate.value;
+
+            if (taskText !== "") {
+                addTaskToList(taskText, false, taskDueDate);
+                taskInput.value = ""; // Clear input
+                taskDate.value = today; // Reset to today's date
+                updateLocalStorage();
+                updateTaskCounter();
+            }
+        });
+
+        // Load tasks on page load
+        loadTasks();
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- JAVASCRIPT -->
+    <!-- Map JS -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js"></script>
+
+    <!-- Vendor JS -->
+    <script src="https://yevgenysim-turkey.github.io/dashbrd/assets/js/vendor.bundle.js"></script>
+
+    <!-- Theme JS -->
+    <script src="https://yevgenysim-turkey.github.io/dashbrd/assets/js/theme.bundle.js"></script>
+
+    <!-- Pop-up Box -->
+   <!--<div id="overlay" class="cover"></div>
+    <div class="row pop-up" id="popup">
+        <div class="box small-6 large-centered">
+             <a href="#" class="close-button" id="closePopup">&#10006;</a>
+            <h3>Contact Us</h3>
+            <p>Want to reach out? Click the button below to send us an email.</p>
+            <a href="#" class="button" id="emailButton"> <button class="button101">Submit</button></a> -->
+            <!--<div class="login">
+                <div class="login-triangle"></div>
+                
+                <h2 class="login-header">Contact us</h2>
+                <h5 class="login-header">Feel free to Contact Us Anytime</h5>
+              
+                <form class="login-container">
+                  <p><input type="email" placeholder="To:- classroom@mail.com"></p>
+                  <p><input type="email" placeholder="From:- satyakidas@mail.com"></p>
+                  <p><input type="text" placeholder="Enter your mail Here"></p>
+                  <p><input type="submit" value="Log in"></p>
+                </form>
+              </div>
+        </div>
+    </div>-->
+
+</body>
+<grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
+
+
+<!-- contact us button -->
+<!--<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const contactButton = document.getElementById("contactButton");
+        const popup = document.getElementById("popup");
+        const closeButton = document.getElementById("closePopup");
+        const overlay = document.getElementById("overlay");
+        const emailButton = document.getElementById("emailButton");
+
+        // Show popup when contact button is clicked
+        contactButton.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            // Ensure overlay and popup are visible
+            overlay.style.display = "block";
+            popup.style.display = "block";
+
+            let opacity = 0;
+            popup.style.opacity = opacity;
+            overlay.style.opacity = opacity;
+
+            let fadeIn = setInterval(() => {
+                if (opacity >= 1) {
+                    clearInterval(fadeIn);
+                } else {
+                    opacity += 0.1;
+                    popup.style.opacity = opacity;
+                    overlay.style.opacity = opacity;
+                }
+            }, 50);
+        });
+
+        // Close popup when close button is clicked
+        closeButton.addEventListener("click", function (event) {
+            event.stopPropagation();
+
+            let opacity = 1;
+            let fadeOut = setInterval(() => {
+                if (opacity <= 0) {
+                    clearInterval(fadeOut);
+                    popup.style.display = "none";
+                    overlay.style.display = "none";
+                } else {
+                    opacity -= 0.1;
+                    popup.style.opacity = opacity;
+                    overlay.style.opacity = opacity;
+                }
+            }, 50);
+        });
+
+        // Open email client when "Learn More" is clicked
+        emailButton.addEventListener("click", function (event) {
+            event.preventDefault();
+            let email = "yevgenysim+simpleqode@gmail.com";
+            let subject = "Hello!";
+            let body = "I would like to get in touch.";
+            let mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoLink;
+        });
+    });
+</script>-->
+
+
+
+
+</body>
+</html>
